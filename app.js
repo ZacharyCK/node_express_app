@@ -7,7 +7,7 @@ const __dirname = dirname(__filename);
 
 import express from 'express';
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 4000;
 
 import dotenv from 'dotenv';
 dotenv.config();
