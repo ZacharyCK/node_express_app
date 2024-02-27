@@ -147,7 +147,15 @@ if ("geolocation" in navigator) {
         .then(data => {
             const cityName = (data.features[0].properties.address.city || data.features[0].properties.address.town || data.features[0].properties.address.village || data.features[0].properties.address.municipality);
             const stateName = data.features[0].properties.address.state;
-            cityElement.innerText = `${cityName}, ${stateName}`;
+            const countryName = data.features[0].properties.address.country;
+            var countryCode = "";
+            for (country of countryDataArray) {
+                if (country.name === countryName) {
+                    countryCode += country.code;
+                    break;
+                }
+            }
+            cityElement.innerText = `${cityName}, ${stateName}, ${countryCode}`;
         })
         .catch(error => console.error('Error:', error));
         
