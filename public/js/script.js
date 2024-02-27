@@ -58,7 +58,7 @@ citySearchBox.addEventListener("input", (event) => {
 
 // Function for fetching geospatial codes (lat, long)
 const getCoordinates = async (cityArr) => {
-    const fetchUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityArr[0]},${cityArr[1]},${cityArr[2]}&limit=1&appid=${weather_api_key}`;
+    const fetchUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityArr[0]},${cityArr[1]},${cityArr[2]}&limit=1&appid=${weather_api_key}`;
     const response = await fetch(fetchUrl);
     const cityData = await response.json();
     return [cityData[0].lat, cityData[0].lon];
