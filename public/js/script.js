@@ -5,8 +5,6 @@ window.addEventListener('load', function() {
     card.style.display = 'flex';
 });
 
-console.log(countryDataArray[1]);
-
 const generateCityAPIParams = (textInput) => {
     // Replacing all spaces with %20, the symbol for spaces in a query string
     let parsedTextInput = textInput.replace(/ /g, "%20")
@@ -60,7 +58,7 @@ citySearchBox.addEventListener("input", (event) => {
 
 // Function for fetching geospatial codes (lat, long)
 const getCoordinates = async (cityArr) => {
-    const fetchUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityArr[0]},${cityArr[1]}&limit=1&appid=${weather_api_key}`;
+    const fetchUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityArr[0]},${cityArr[1]},${cityArr[2]}&limit=1&appid=${weather_api_key}`;
     const response = await fetch(fetchUrl);
     const cityData = await response.json();
     return [cityData[0].lat, cityData[0].lon];
@@ -83,7 +81,14 @@ const processWeatherByCity = (event) => {
     const searchCity = citySearchBox.value;
     const cityArray = searchCity.split(", ", 3);
     // convert country name into abbreviation
-
+    for(country of countryDataArray) {
+        if (country.name === cityArray[2]) {
+            const countryCode = country.code;
+            cityArray.pop();
+            cityArray.push(countryCode);
+            break;
+        }
+    }
     console.log(cityArray);
     getCoordinates(cityArray).then(coordinates => {
         const [lat, long] = coordinates;
