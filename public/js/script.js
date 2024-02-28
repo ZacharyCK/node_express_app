@@ -48,13 +48,23 @@ citySearchBox.addEventListener("input", (event) => {
             // const citySet = createCitySet(cities);
             // Get only 5 results
             for(let i = 0; i < citySet.length; i++) {
-                let newCity = document.createElement("option");
-                newCity.setAttribute("value", citySet[i].city + ", " + citySet[i].state + ", " + citySet[i].country);
+                let newCity = document.createElement("div");
+                newCity.setAttribute("onClick", "selectItem('" + citySet[i].city + "," + citySet[i].state + "," + citySet[i].country + "')");
+                newCity.innerText = citySet[i].city + "," + citySet[i].state + "," + citySet[i].country;
                 cityList.appendChild(newCity);
+                cityList.style.display = "block";
+                newCity.style.display = "";
             }
         })
+    } else {
+        cityList.style.display = "none";
     }
 })
+
+function selectItem(value) {
+    document.getElementById('city-search-box').value = value;
+    document.getElementById('cities').style.display = "none";
+}
 
 // Function for fetching geospatial codes (lat, long)
 const getCoordinates = async (cityArr) => {
